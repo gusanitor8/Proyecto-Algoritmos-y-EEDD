@@ -104,16 +104,5 @@ public class Parser {
         return output;
     }
 
-    /**
-    public static void main(String[] args) {
 
-        Parser test = new Parser();
-        String s1 = "1+((2*5)^(3/5))";
-        LinkedList<String> s1q = test.stringToQueue(s1);
-
-        LinkedList<String> s1test = test.parse(s1q);
-        test.printOutput(s1test);
-
-    }
-    **/
 }

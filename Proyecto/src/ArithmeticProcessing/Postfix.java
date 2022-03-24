@@ -336,18 +336,4 @@ public class Postfix {
         return p;
     }
 
-    /**
-    public static void main(String[] args) {
-
-        Postfix evaluator = new Postfix();
-        Parser parser = new Parser();
-
-        //String s1 = "1+((2*5)^(3/5)/sqrt(5))";
-        String s1 = "+ 2 2";
-
-
-        evaluator.evaluate(parser.stringToQueue(s1));
-
-    }
-    **/
 }

@@ -7,7 +7,7 @@
  */
 
 
-import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanProperty;
+//import javafx.beans.property.adapter.ReadOnlyJavaBeanBooleanProperty;
 import java.util.List;
 import java.util.ArrayList;
 
