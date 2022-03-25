@@ -5,18 +5,19 @@ public class Variable {
     private String name;
     private String type;
     private String value;
+    private String[] valores;
 
     /**
-     * Metodo constructor de la clase Variable
-     * @param name nombre de la variable
-     * @param type
-     * @param value
+     * metodo constructor de variable
+     * @param values
      */
-    public Variable(String name, String type, String value){
-        this.name = name;
-        this.type = type;
-        this.value = value;
-        String[] data = {name, value, type};
+    public Variable(String[] values){
+        this.name = values[0];
+        this.value = values[1];
+        this.type = values[2];
+        this.valores = values;
+
+        variables.add(this);
 
         //TODO verificar si la variable existe dentro del array, si si cambiar los valores, si no agregarla como nueva
 

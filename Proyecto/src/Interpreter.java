@@ -23,8 +23,29 @@ public class Interpreter {
                     System.out.println(end);
 
                 }else if(vista.isSetQ(expression)){
-                    //TODO en caso de ser SETQ
-                    System.out.println("Quiere declarar una variable");
+                    String[] valores;
+                    String[] temp;
+
+                    if(vista.isSetQString(expression)){
+                        //TODO que hacer si la variable es una cadena
+                        System.out.println("Quiere declarar una variable String");
+                        temp = vista.getSetQExpression(expression);
+                        valores = new String[]{temp[0], temp[1], "String"};
+
+                    }else if(vista.isSetQnum(expression)){
+                        //TODO que hacer si la variable es un numero
+                        System.out.println("Quiere declarar una variable numerica");
+                        temp = vista.getSetQExpression(expression);
+                        valores = new String[]{temp[0], temp[1], "int"};
+
+                    }else if(vista.isSetQbool(expression)){
+                        //TODO que hacer si la variable es booleana
+                        System.out.println("Quiere declarar una variable booleana");
+                        temp = vista.getSetQExpression(expression);
+                        valores = new String[]{temp[0], temp[1], "boolean"};
+
+                        Variable var = new Variable(valores);
+                    }
                 }
 
             }else{

@@ -25,11 +25,13 @@ class VistaTest {
         String expression2 = "esta no es una cadena";
         String expression3 = "esta tampoco\"";
         String expression4 = "\" no es una cadena :(";
+        String expression5 = "\"hola\"";
 
         assertEquals(true, vista.checkString(expression));
         assertEquals(false, vista.checkString(expression2));
         assertEquals(false, vista.checkString(expression3));
         assertEquals(false, vista.checkString(expression4));
+        assertEquals(true, vista.checkString(expression5));
     }
 
     @Test
@@ -85,6 +87,64 @@ class VistaTest {
         assertEquals(true, vista.isQuote(expression3));
         assertEquals(true, vista.isQuote(expression4));
         assertEquals(false, vista.isQuote(expression5));
+    }
+
+
+
+    @Test
+    public void getSetQExpressionTest(){
+        Vista vista = new Vista();
+        String expression = " setq n 10";
+        String expression2 = " setq a \"hola\"";
+
+        String[] expected = {"n", "10"};
+        String[] expected2 = {"a", "hola"};
+
+        assertArrayEquals(expected,vista.getSetQExpression(expression));
+        assertArrayEquals(expected2,vista.getSetQExpression(expression2));
+
+    }
+
+    @Test
+    public void isSetQBoolTest(){
+        Vista vista = new Vista();
+        String expression = " setq n nil";
+        String expression2 = " setq n t";
+        String expression3 = " setq a a";
+        String expression4 = " setq a 20";
+
+        assertEquals(true,vista.isSetQbool(expression));
+        assertEquals(true,vista.isSetQbool(expression2));
+        assertEquals(false,vista.isSetQbool(expression3));
+        assertEquals(false,vista.isSetQbool(expression4));
+    }
+
+    @Test
+    public void isSetQString(){
+        Vista vista = new Vista();
+        String expression = " setq n \"holis\"";
+        String expression2 = " setq n \"20\"";
+        String expression3 = " setq a a";
+        String expression4 = " setq a 20";
+
+        assertEquals(true,vista.isSetQString(expression));
+        assertEquals(true,vista.isSetQString(expression2));
+        assertEquals(false,vista.isSetQString(expression3));
+        assertEquals(false,vista.isSetQString(expression4));
+    }
+
+    @Test
+    public void isSetQnumTest(){
+        Vista vista = new Vista();
+        String expression = " setq n 99";
+        String expression2 = " setq n 0";
+        String expression3 = " setq a a";
+        String expression4 = " setq a '20";
+
+        assertEquals(true,vista.isSetQnum(expression));
+        assertEquals(true,vista.isSetQnum(expression2));
+        assertEquals(false,vista.isSetQnum(expression3));
+        assertEquals(false,vista.isSetQnum(expression4));
     }
 }
 
