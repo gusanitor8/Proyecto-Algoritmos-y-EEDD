@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Variable {
-    static ArrayList<Variable> variables;
+    static HashMap<String, String[]> variables = new HashMap<String, String[]>();
+
     private String name;
     private String type;
     private String value;
@@ -15,18 +17,31 @@ public class Variable {
         this.name = values[0];
         this.value = values[1];
         this.type = values[2];
-        this.valores = values;
+        this.valores = new String[]{value, type};
 
-        variables.add(this);
+        variables.put(name, valores);
 
-        //TODO verificar si la variable existe dentro del array, si si cambiar los valores, si no agregarla como nueva
-
+        System.out.println(value);
     }
 
-    public Variable setq(String name, String value){
+    public String getValue(){
+        String value = variables.get(name)[0];
+        return value;
+    }
 
+    public static String getValue(String name){
+        String value = variables.get(name)[0];
+        return value;
+    }
 
-        return null;
+    public String getType(){
+        String type = variables.get(name)[1];
+        return type;
+    }
+
+    public static String getType(String name){
+        String type = variables.get(name)[1];
+        return type;
     }
 
 }

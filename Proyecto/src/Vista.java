@@ -60,7 +60,7 @@ public class Vista {
         boolean isArithmetic = false;
 
         if (checkString(expression) == false){
-            String pattern1 = "[\\+\\^\\*/\\-=<>]+";
+            String pattern1 = "[\\+\\^\\*/-]+";
             Pattern pattern = Pattern.compile(pattern1, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(expression);
 
@@ -166,4 +166,37 @@ public class Vista {
         return isQuote;
     }
 
+    /**
+     * Reconoce la sintaxis de una operacion logica
+     * @param expression
+     * @return
+     */
+    public boolean isLogicOperation(String expression){
+        String logicalOperators = "[=<>]+";
+        Pattern pattern = Pattern.compile(logicalOperators, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        return matcher.find();
+    }
+
+    /**
+     * Reconoce la sintaxis de la funcion cond
+     * @param expression
+     * @return
+     */
+    public boolean isCond(String expression){
+        String condSyntax = "^cond[ ]+[\\(]{1}.+[\\)]{1}";
+        Pattern pattern = Pattern.compile(condSyntax, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        return matcher.find();
+    }
+
+
+    public String removeQuote(String expression){
+        expression = expression.replace("\'","");
+        System.out.println(expression);
+
+        return expression;
+    }
 }

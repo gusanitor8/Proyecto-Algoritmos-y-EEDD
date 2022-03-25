@@ -146,5 +146,40 @@ class VistaTest {
         assertEquals(false,vista.isSetQnum(expression3));
         assertEquals(false,vista.isSetQnum(expression4));
     }
+
+    @Test
+    public void isLogicOperationTest(){
+        Vista vista = new Vista();
+        String expression = "= 1 0";
+        String expression2 = " > 2 7";
+        String expression3 = " < 7 x";
+        String expression4 = " setq a '20";
+
+        assertEquals(true,vista.isLogicOperation(expression));
+        assertEquals(true,vista.isLogicOperation(expression2));
+        assertEquals(true,vista.isLogicOperation(expression3));
+        assertEquals(false,vista.isLogicOperation(expression4));
+    }
+
+    @Test
+    public void isCondTest(){
+        Vista vista = new Vista();
+        String expression = "cond ((> a 20)" +
+                "   (format t \"~% a is greater than 20\"))" +
+                "   (t (format t \"~% value of a is ~d \" a))";
+        String expression2 = " > 2 7";
+
+
+        assertEquals(true,vista.isCond(expression));
+        assertEquals(false,vista.isCond(expression2));
+    }
+
+    @Test
+    public void removeQuoteTest(){
+        Vista vista = new Vista();
+        String expression = "'(holi soy yo)";
+
+        assertEquals("(holi soy yo)", vista.removeQuote(expression));
+    }
 }
 
