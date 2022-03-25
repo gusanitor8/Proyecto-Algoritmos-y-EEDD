@@ -84,11 +84,67 @@ public class Vista {
     }
 
     public boolean isSetQ(String expression){
-        String setQString = "[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+.+";
+        String setQString = "^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+.+$";
         Pattern pattern = Pattern.compile(setQString, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(expression);
 
         return matcher.find();
+    }
+
+    public boolean isSetQString(String expression){
+        String setQString = "^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+[\"]{1}.*[\"]{1}$";
+        Pattern pattern = Pattern.compile(setQString, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        return matcher.find();
+    }
+
+    public boolean isSetQnum(String expression){
+        String setQString = "^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+[0-9]+$";
+        Pattern pattern = Pattern.compile(setQString, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        return matcher.find();
+    }
+
+    public boolean isSetQbool(String expression){
+        boolean isQuote = false;
+
+        String parentheses = "^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+[t]{1}$";
+        String noParentheses ="^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+nil$" ;
+
+        Pattern pattern = Pattern.compile(parentheses, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        Pattern pat = Pattern.compile(noParentheses, Pattern.CASE_INSENSITIVE);
+        Matcher mat = pat.matcher(expression);
+
+        if (matcher.find()||mat.find()){
+            isQuote = true;
+        }
+        return isQuote;
+    }
+
+
+
+    public String[] getSetQExpression(String expression){
+        String[] values = null;
+        if(isSetQ(expression)){
+            expression = expression.strip();
+
+            values = expression.split(" ");
+
+            String last = values[2];
+
+            if(checkString(last)){          //revisa si el valor es una cadena
+
+                last = last.substring(1 , last.length() - 1);
+                values[2] = last;
+            }
+            values = new String[]{values[1], values[2]};
+        }
+        //TODO arreglar el problema del double quotation mark
+        return values;
     }
 
 
@@ -110,4 +166,37 @@ public class Vista {
         return isQuote;
     }
 
+    /**
+     * Reconoce la sintaxis de una operacion logica
+     * @param expression
+     * @return
+     */
+    public boolean isLogicOperation(String expression){
+        String logicalOperators = "[=<>]+";
+        Pattern pattern = Pattern.compile(logicalOperators, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        return matcher.find();
+    }
+
+    /**
+     * Reconoce la sintaxis de la funcion cond
+     * @param expression
+     * @return
+     */
+    public boolean isCond(String expression){
+        String condSyntax = "^cond[ ]+[\\(]{1}.+[\\)]{1}";
+        Pattern pattern = Pattern.compile(condSyntax, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        return matcher.find();
+    }
+
+
+    public String removeQuote(String expression){
+        expression = expression.replace("\'","");
+        System.out.println(expression);
+
+        return expression;
+    }
 }
