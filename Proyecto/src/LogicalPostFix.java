@@ -1,12 +1,12 @@
-import java.util.stack;
+import java.util.Stack;
 
 public class LogicalPostFix {
 	Stack<Integer> stack = new Stack<Integer>();
 	
-	public LogicalPostFix(String Expression){	
-		String[] tokenized = expression.split( regex: "");
+	public String operate(String expression){
+		String[] tokenized = expression.split(" ");
 		
-		For(int i = tokenized.length-1; i>= 0; i--){
+		for(int i = tokenized.length-1; i>= 0; i--){
 			try {
 				int num = Integer.valueOf(tokenized[i].strip());
 				stack.push(num);
@@ -14,31 +14,32 @@ public class LogicalPostFix {
 			}catch(NumberFormatException e){
 				if(tokenized[i].strip().equals(">")){
 					if(stack.pop() > stack.pop()){
-						System.out.printin("t");
+						return("t");
 					}else{
-						System.out.printin("nil");
+						return("nil");
 					}
 					
 			
-				}else if(tokenized[i].strip().equals("<")
+				}else if(tokenized[i].strip().equals("<")){
 					if( stack.pop() < stack.pop()){
-						System.out.printin("t");
+						return("t");
 					}else{
-						System.out.printin("nil");
+						return("nil");
 					}
 					
 					
-				}else if(tokenized[i].strip().equals("=")
+				}else if(tokenized[i].strip().equals("=")){
 					if( stack.pop() == stack.pop()){
-						System.out.printin("t");
+						return("t");
 					}else{
-						System.out.printin("nil");
+						return("nil");
 					}
-				
 				}
 			}
 		}
+		return "";
 	}
+}
 	
-	public static void main(Strings[] args){
+
 	

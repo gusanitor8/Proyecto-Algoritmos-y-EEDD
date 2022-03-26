@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class VistaTest {
@@ -178,8 +181,53 @@ class VistaTest {
     public void removeQuoteTest(){
         Vista vista = new Vista();
         String expression = "'(holi soy yo)";
+        String expression2 = "'(holi 'soy yo)";
 
         assertEquals("(holi soy yo)", vista.removeQuote(expression));
+        assertEquals("(holi 'soy yo)", vista.removeQuote(expression2));
+    }
+
+    @Test
+    public void isDefunTest(){
+        Vista vista = new Vista();
+        String expression = "defun name (x)";
+        String expression2 = "defun name (x y)";
+
+        assertEquals(true, vista.isDefun(expression));
+        assertEquals(true, vista.isDefun(expression2));
+    }
+
+    @Test
+    public void getFuncPartsTest(){
+        Vista vista = new Vista();
+        String expression = "defun    name    (x y)";
+
+        ArrayList<String> expected = new ArrayList<String>();
+        expected.add("defun");
+        expected.add("name");
+        expected.add("(x)");
+
+        assertEquals(expected, vista.getFuncParts(expression));
+    }
+
+    @Test
+    public void getFuncNameTest(){
+        Vista vista = new Vista();
+        String expression = "defun    name    (x)";
+        String expression2 = "defun    myFunc    (x y)";
+
+        assertEquals("name", vista.getFuncName(expression));
+        assertEquals("myFunc", vista.getFuncName(expression2));
+    }
+
+    @Test
+    public void getFuncVarsTest(){
+        Vista vista = new Vista();
+        String expression = "defun    name    (x)";
+        String expression2 = "defun    myFunc    (x y)";
+
+        assertEquals("(x)", vista.getFuncVars(expression));
+        assertEquals("(x y)", vista.getFuncVars(expression2));
     }
 }
 

@@ -5,6 +5,7 @@ public class Interpreter {
     Vista vista = new Vista();
     Parser parser = new Parser();
     Postfix postfix = new Postfix();
+    LogicalPostFix logic = new LogicalPostFix();
 
     public void run(){
         boolean condition = true;
@@ -18,10 +19,18 @@ public class Interpreter {
             if(vista.hasParentheses(expression)){                       //Verifica si tiene parentesis
                 expression = vista.rmParentheses(expression);           //Se remueven los parentesis de la expresion
 
-                if(vista.isArthmetic(expression)){
+                if(vista.isDefun(expression)){
+                    System.out.println(vista.getFuncName(expression));
+
+
+                }else if(vista.isArthmetic(expression)) {
                     expression = findAndReplaceVar(expression);
                     String end = postfix.evaluate(parser.stringToQueue(expression));
                     System.out.println(end);
+
+                }else if(vista.isLogicOperation(expression)){
+                    expression = findAndReplaceVar(expression);
+                    System.out.println( logic.operate(expression));
 
                 }else if(vista.isSetQ(expression)){
                     String[] valores;
@@ -51,11 +60,14 @@ public class Interpreter {
 
                         Variable var = new Variable(valores);
                     }
+                }else{
+                    findAndReplaceVar(expression);
                 }
 
             }else{
                 if(vista.isQuote(expression)){
                     vista.removeQuote(expression);
+                    System.out.println(expression);
                 }
 
             }
@@ -68,6 +80,7 @@ public class Interpreter {
         String[] names = Variable.variables.keySet().toArray(new String[Variable.variables.size()]);
         for (String name: names) {
             String find = " " + name + " ";
+            String find2 = "[ ]*"+ name + "[ ]*";
             String replaceBy = " " + Variable.getValue(name) + " ";
             expression = expression.replaceAll(find, replaceBy );
         }

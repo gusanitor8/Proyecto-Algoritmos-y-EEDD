@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
 
@@ -194,9 +195,58 @@ public class Vista {
 
 
     public String removeQuote(String expression){
-        expression = expression.replace("\'","");
+        expression = expression.substring(1, expression.length());
         System.out.println(expression);
 
         return expression;
+    }
+
+    public boolean isDefun(String expression){
+        String condSyntax = "^[ ]*defun[ ]+[A-Za-z]+[ ]+[\\(]{1}.+[\\)]{1}";
+        Pattern pattern = Pattern.compile(condSyntax, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        return matcher.find();
+    }
+
+    public ArrayList<String> getFuncParts(String expression){
+        String[] splited;
+        String vars = "";
+        ArrayList<String> end = new ArrayList<String>() ;
+
+        if(isDefun(expression)) {
+            String pattern1 = "[\\(]{1}.*[\\)]{1}";
+            Pattern pattern = Pattern.compile(pattern1, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(expression);
+
+            if(matcher.find()){
+                vars = matcher.group();
+            }
+
+
+            splited = expression.split(" ");
+
+            for (int i = 0; i < splited.length; i++) {
+                if(splited[i].equals("") == false) {
+                    end.add(splited[i]);
+                }
+            }
+            end.set(2, vars);
+        }
+
+        return end;
+    }
+
+    public String getFuncName(String expression){
+        ArrayList<String> parts = getFuncParts(expression);
+
+        return parts.get(1);
+    }
+
+
+    public String getFuncVars(String expression){
+        ArrayList<String> parts = getFuncParts(expression);
+
+        return parts.get(2);
     }
 }
