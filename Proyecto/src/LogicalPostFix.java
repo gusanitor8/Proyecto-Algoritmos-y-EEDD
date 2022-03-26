@@ -2,7 +2,12 @@ import java.util.Stack;
 
 public class LogicalPostFix {
 	Stack<Integer> stack = new Stack<Integer>();
-	
+
+	/**
+	 * Evalua la expresion logica
+	 * @param expression expresion logica
+	 * @return cadena con el resultado
+	 */
 	public String operate(String expression){
 		String[] tokenized = expression.split(" ");
 		

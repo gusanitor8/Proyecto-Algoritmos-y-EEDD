@@ -84,6 +84,11 @@ public class Vista {
         return matcher.find();
     }
 
+    /**
+     * Verifica que la expresion ingresada por el usuario corresponda a la sintaxis de un SEETQ
+     * @param expression expresion ingresda por el usuario
+     * @return booleano
+     */
     public boolean isSetQ(String expression){
         String setQString = "^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+.+$";
         Pattern pattern = Pattern.compile(setQString, Pattern.CASE_INSENSITIVE);
@@ -92,6 +97,11 @@ public class Vista {
         return matcher.find();
     }
 
+    /**
+     * Verifica si la variable esta siendo asignada a un tipo de dato String
+     * @param expression expresion ingresda por el usuario
+     * @return booleano
+     */
     public boolean isSetQString(String expression){
         String setQString = "^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+[\"]{1}.*[\"]{1}$";
         Pattern pattern = Pattern.compile(setQString, Pattern.CASE_INSENSITIVE);
@@ -100,6 +110,11 @@ public class Vista {
         return matcher.find();
     }
 
+    /**
+     * Verifica si la variable esta siendo asignada a un tipo de dato Entero
+     * @param expression expresion ingresda por el usuario
+     * @return booleano
+     */
     public boolean isSetQnum(String expression){
         String setQString = "^[ ]*setq[ ]+[A-Za-z]{1}.*[ ]+[0-9]+$";
         Pattern pattern = Pattern.compile(setQString, Pattern.CASE_INSENSITIVE);
@@ -108,6 +123,11 @@ public class Vista {
         return matcher.find();
     }
 
+    /**
+     * Verifica si la variable esta siendo asignada a un tipo de dato booleano
+     * @param expression expresion ingresda por el usuario
+     * @return booleano
+     */
     public boolean isSetQbool(String expression){
         boolean isQuote = false;
 
@@ -127,7 +147,11 @@ public class Vista {
     }
 
 
-
+    /**
+     * Devuelve un array con llos datos de la variable a instanciar
+     * @param expression expresion ingresda por el usuario
+     * @return String[]
+     */
     public String[] getSetQExpression(String expression){
         String[] values = null;
         if(isSetQ(expression)){
@@ -144,11 +168,15 @@ public class Vista {
             }
             values = new String[]{values[1], values[2]};
         }
-        //TODO arreglar el problema del double quotation mark
+
         return values;
     }
 
-
+    /**
+     * Verifica que la sintaxis de la expresin coincida con la de QUOTE
+     * @param expression expresion ingresda por el usuario
+     * @return boolean
+     */
     public boolean isQuote(String expression){
         boolean isQuote = false;
 
@@ -169,8 +197,8 @@ public class Vista {
 
     /**
      * Reconoce la sintaxis de una operacion logica
-     * @param expression
-     * @return
+     * @param expression expresion ingresda por el usuario
+     * @return boolean
      */
     public boolean isLogicOperation(String expression){
         String logicalOperators = "[=<>]+";
@@ -182,7 +210,7 @@ public class Vista {
 
     /**
      * Reconoce la sintaxis de la funcion cond
-     * @param expression
+     * @param expression expresion ingresda por el usuario
      * @return
      */
     public boolean isCond(String expression){
@@ -274,8 +302,8 @@ public class Vista {
 
     /**
      * Devuelve las variables de una funcion
-     * @param expression
-     * @return
+     * @param expression expresion ingresda por el usuario
+     * @return String
      */
     public String getFuncVars(String expression){
         ArrayList<String> parts = getFuncParts(expression);
@@ -283,7 +311,11 @@ public class Vista {
         return parts.get(2);
     }
 
-
+    /**
+     * Devuelve el predicado de la funcion, es decir sus instrucciones
+     * @param expression expresion ingresda por el usuario
+     * @return String
+     */
     public String getFuncPredicate(String expression){
         String vars = getFuncVars(expression);
         String condSyntax = "^[ ]*defun[ ]+[A-Za-z]+[ ]+[\\(]" + vars + "[\\)]";
@@ -300,6 +332,11 @@ public class Vista {
         return expression;
     }
 
+    /**
+     * Devuelve el primer atom de una expresion
+     * @param expression expresion ingresda por el usuario
+     * @return String
+     */
     public String getFirstAtom(String expression){
         String condSyntax = "^[ ]*[A-Za-z0-9]+";
         Pattern pattern = Pattern.compile(condSyntax, Pattern.CASE_INSENSITIVE);
@@ -314,6 +351,12 @@ public class Vista {
         return atom;
     }
 
+    /**
+     * Devuelve el enesimo atom de una expresion
+     * @param expression expresion ingresda por el usuario
+     * @param atomIndex indice de la lista que se quiere obtener
+     * @return String
+     */
     public String getNAtom(String expression,int atomIndex){
         ArrayList<String> atoms = new ArrayList<String>();
         String[] splited = expression.split(" ");

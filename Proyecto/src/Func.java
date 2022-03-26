@@ -1,5 +1,8 @@
 import java.util.HashMap;
 
+/**
+ * NOTA: Los getters no se documentaron porque se encontro redundante hacerlo
+ */
 public class Func {
     private String name;
     private String parameters;
@@ -7,6 +10,12 @@ public class Func {
     private String predicate;
     private static HashMap<String, Func> funciones = new HashMap<String, Func>();
 
+    /**
+     * Metodo constructor
+     * @param name nombre de la funcion
+     * @param parameters parametros de la funcion
+     * @param predicate instrucciones a ejecutar
+     */
     public Func(String name, String parameters, String predicate){
         this.name = name;
         this.parameters = parameters;
@@ -16,6 +25,11 @@ public class Func {
         funciones.put(name,this);
     }
 
+    /**
+     * Cuenat el numero de variables en una expresion
+     * @param vars las variables de la funcion
+     * @return String
+     */
     private String countVars(String vars){
         int counter = 0;
         for(int i = 0; i < vars.length(); i++){

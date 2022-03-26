@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * NOTA: Los getters no se documentaron porque se encontro redundante hacerlo
+ */
 public class Variable {
     static HashMap<String, String[]> variables = new HashMap<String, String[]>();
 
@@ -23,6 +26,7 @@ public class Variable {
 
         System.out.println(value);
     }
+
 
     public String getValue(){
         String value = variables.get(name)[0];

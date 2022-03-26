@@ -7,6 +7,10 @@ public class Interpreter {
     Postfix postfix = new Postfix();
     LogicalPostFix logic = new LogicalPostFix();
 
+    /**
+     * funcion que se llama al ejecutar el programa
+     * @param string Expresion
+     */
     public void run(String string){
         boolean condition = true;
         int lineCount = 1;
@@ -113,6 +117,11 @@ public class Interpreter {
 
     }
 
+    /**
+     * Encuentra y remplaza la variable en una expresion
+     * @param expression expresion ingresda por el usuario
+     * @return String
+     */
     public String findAndReplaceVar(String expression){
         String[] names = Variable.variables.keySet().toArray(new String[Variable.variables.size()]);
         for (String name: names) {
