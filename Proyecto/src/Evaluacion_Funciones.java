@@ -85,47 +85,9 @@ public class Evaluacion_Funciones {
     }
     
     
+   
     
-    
-    
-    
-    
-    
-    // ejemplo de como debe de colocar el usuario =  (cond ((equal 2 2) (+ 1 1)) ((equal 1 3) (+ 1 2)) (t (+ 2 2)))    
-    //Se le pasara la primera lista ( ("equal 2 2" , "+ 1 1") , ("equal 1 3" , "+ 1 2") , "t (+ 2 2)"  )    lista instrucciones
-    
-    
-    public Object cond(List condiciones){
-        List subList = condiciones.subList(1, condiciones.size());     //Se toma ((equal 1 3) (+ 1 2))) como sublist
-        List subList2 = (List) subList.get(0);                        //Se toma (equal 1 3) (+ 1 2)) como subList2
-        int i = 0;                                                     //evalua (equal 2 2) (+ 1 1)
-        for (Object inst: subList2) {                                
-            List instruccion = (List)inst;      //Se plantea la variable "instrucciones" como 
-            if (instruccion.contains("equal")){
-                if (isEqual(instruccion.get(1), instruccion.get(2))){
-                    return instruccion.get(3);                           //devuelve (+ 1 2 )
-                }
-            } else if (instruccion.contains("<")){
-                if (isLessThan(instruccion.get(1), instruccion.get(2))){
-                    return instruccion.get(3);
-                }
-            } else if (instruccion.contains(">")){
-                if (isGreaterThan(instruccion.get(1), instruccion.get(2))){
-                    return instruccion.get(3);
-                }
-            } else if (i == subList2.size()){
-                return subList2.get(i);
-            }
-            i++;
-        }
-        return null;                                               //El resultado de este metodo se debe de volver a evaluar, y debe de pasar por todos los metodos, otra vez 
-    }
-    
-    
-    
-    
-    
-    
+     
     
     
     
