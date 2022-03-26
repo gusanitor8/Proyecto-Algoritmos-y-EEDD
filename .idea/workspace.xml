@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6a1e0e76-b842-4923-ae25-670528072f90" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Proyecto/src/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Proyecto/src/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Proyecto/src/Vista.java" beforeDir="false" afterPath="$PROJECT_DIR$/Proyecto/src/Vista.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Proyecto/src/VistaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Proyecto/src/VistaTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="26u0jze8TCJSxJgbChxKlunkbN3" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6a1e0e76-b842-4923-ae25-670528072f90" name="Default Changelist" comment="" />
+      <created>1648258302920</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648258302920</updated>
+    </task>
+    <servers />
+  </component>
+</project>

@@ -7,21 +7,52 @@ public class Interpreter {
     Postfix postfix = new Postfix();
     LogicalPostFix logic = new LogicalPostFix();
 
-    public void run(){
+    public void run(String string){
         boolean condition = true;
         int lineCount = 1;
-
+        int counter = 0;
 
 
         while (condition){
-            String expression = vista.display(lineCount);
+
+            String expression = "";
+            if(string == null) {
+                expression = vista.display(lineCount);
+            }else{
+                expression = string;
+                if(counter>0){
+                    condition = false;
+                    break;
+                }
+            }
 
             if(vista.hasParentheses(expression)){                       //Verifica si tiene parentesis
                 expression = vista.rmParentheses(expression);           //Se remueven los parentesis de la expresion
 
                 if(vista.isDefun(expression)){
+                    String funcName = vista.getFuncName(expression);
+                    String vars = vista.getFuncVars(expression);
+                    String predicate = vista.getFuncPredicate(expression);
+
+                    Func func = new Func(funcName,vars,predicate);
+
                     System.out.println(vista.getFuncName(expression));
 
+                }else if(Func.isInMap(vista.getFirstAtom(expression))){
+                    String funcName = vista.getFirstAtom(expression);
+                    Func myFunc = Func.getFunc(funcName);
+                    String variables = myFunc.getParameters();
+
+                    for(int i = 0; i < variables.length(); i++){
+                        if(variables.charAt(i) != ' '){
+                            char temp = variables.charAt(i);
+                            String input ="(setq "+ temp +" "+ vista.getNAtom(expression,i+1)+")";
+                            run(input);
+                        }
+                    }
+
+                    run(myFunc.getPredicate());
+                    System.out.println("I worked??");
 
                 }else if(vista.isArthmetic(expression)) {
                     expression = findAndReplaceVar(expression);
@@ -60,6 +91,9 @@ public class Interpreter {
 
                         Variable var = new Variable(valores);
                     }
+                }else if(expression.equals("exit")){
+                    break;
+
                 }else{
                     findAndReplaceVar(expression);
                 }
@@ -73,17 +107,21 @@ public class Interpreter {
             }
 
             lineCount += 1;
+            counter++;
         }
+
+
     }
 
     public String findAndReplaceVar(String expression){
         String[] names = Variable.variables.keySet().toArray(new String[Variable.variables.size()]);
         for (String name: names) {
-            String find = " " + name + " ";
+            String find =  name;
             String find2 = "[ ]*"+ name + "[ ]*";
-            String replaceBy = " " + Variable.getValue(name) + " ";
+            String replaceBy =   Variable.getValue(name) ;
             expression = expression.replaceAll(find, replaceBy );
         }
+        expression = expression.strip();
 
         return expression;
     }

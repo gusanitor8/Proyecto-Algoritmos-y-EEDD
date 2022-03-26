@@ -193,7 +193,11 @@ public class Vista {
         return matcher.find();
     }
 
-
+    /**
+     * Remueve la comilla de una expresion
+     * @param expression expresin ingresada por el usuario
+     * @return la expresion sin la comilla
+     */
     public String removeQuote(String expression){
         expression = expression.substring(1, expression.length());
         System.out.println(expression);
@@ -201,6 +205,11 @@ public class Vista {
         return expression;
     }
 
+    /**
+     * Verifica que la expresion tenga la sintaxis de DEFUN
+     * @param expression expresion ingresada por el usuario
+     * @return devuelve true si cumple con la sintaxis
+     */
     public boolean isDefun(String expression){
         String condSyntax = "^[ ]*defun[ ]+[A-Za-z]+[ ]+[\\(]{1}.+[\\)]{1}";
         Pattern pattern = Pattern.compile(condSyntax, Pattern.CASE_INSENSITIVE);
@@ -209,6 +218,11 @@ public class Vista {
         return matcher.find();
     }
 
+    /**
+     * Devuelve un ArrayList con las partes de la funcion
+     * @param expression expresion ingresada por el usuario
+     * @return ArrayList
+     */
     public ArrayList<String> getFuncParts(String expression){
         String[] splited;
         String vars = "";
@@ -218,9 +232,19 @@ public class Vista {
             String pattern1 = "[\\(]{1}.*[\\)]{1}";
             Pattern pattern = Pattern.compile(pattern1, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(expression);
+            String[] fin ;
 
             if(matcher.find()){
-                vars = matcher.group();
+                 vars = matcher.group();
+                 fin = vars.split("\\)[ ]+\\(");
+
+                 String check = fin[0].substring(fin[0].length()-1,fin[0].length());
+                 if (check.equals(")")){
+                     fin[0] = rmParentheses(fin[0]);
+                 }else {
+                     fin[0] = fin[0].substring(1, fin[0].length());
+                 }
+                 vars = fin[0];
             }
 
 
@@ -237,16 +261,72 @@ public class Vista {
         return end;
     }
 
+    /**
+     * Devuelve el nombre de una funcion dada una expresion
+     * @param expression expresion ingresada por el usuario
+     * @return devuelve el nombre de la funcion
+     */
     public String getFuncName(String expression){
         ArrayList<String> parts = getFuncParts(expression);
 
         return parts.get(1);
     }
 
-
+    /**
+     * Devuelve las variables de una funcion
+     * @param expression
+     * @return
+     */
     public String getFuncVars(String expression){
         ArrayList<String> parts = getFuncParts(expression);
 
         return parts.get(2);
     }
+
+
+    public String getFuncPredicate(String expression){
+        String vars = getFuncVars(expression);
+        String condSyntax = "^[ ]*defun[ ]+[A-Za-z]+[ ]+[\\(]" + vars + "[\\)]";
+
+        Pattern pattern = Pattern.compile(condSyntax, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+
+        if (matcher.find()){
+            String fun = matcher.group();
+            expression = expression.replace(fun,"");
+        }
+        expression = expression.strip();
+
+        return expression;
+    }
+
+    public String getFirstAtom(String expression){
+        String condSyntax = "^[ ]*[A-Za-z0-9]+";
+        Pattern pattern = Pattern.compile(condSyntax, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(expression);
+        String atom = "";
+
+        if(matcher.find()){
+            atom = matcher.group();
+        }
+        atom = atom.strip();
+
+        return atom;
+    }
+
+    public String getNAtom(String expression,int atomIndex){
+        ArrayList<String> atoms = new ArrayList<String>();
+        String[] splited = expression.split(" ");
+
+        for(String str: splited){
+            atoms.add(str);
+        }
+        atoms.removeIf(item -> item == null || "".equals(item));
+
+        return atoms.get(atomIndex);
+
+
+
+    }
+
 }

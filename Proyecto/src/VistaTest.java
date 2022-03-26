@@ -224,10 +224,40 @@ class VistaTest {
     public void getFuncVarsTest(){
         Vista vista = new Vista();
         String expression = "defun    name    (x)";
-        String expression2 = "defun    myFunc    (x y)";
+        String expression2 = "defun    myFunc    (x y)  (abcde)";
 
-        assertEquals("(x)", vista.getFuncVars(expression));
-        assertEquals("(x y)", vista.getFuncVars(expression2));
+        assertEquals("x", vista.getFuncVars(expression));
+        assertEquals("x y", vista.getFuncVars(expression2));
+    }
+
+    @Test
+    public void getFuncPredicateTest(){
+        Vista vista = new Vista();
+        String expression = "defun name  (x) (+ 1 1)";
+        String expression2 = "defun sumone (x) (+ 1 x)";
+
+        //assertEquals("(+ 1 1)",vista.getFuncPredicate(expression));
+        assertEquals("(+ 1 x)",vista.getFuncPredicate(expression2));
+    }
+
+    @Test
+    public void getFirstAtomTest(){
+        Vista vista = new Vista();
+        String expression = "hola soy gus";
+        String expression2 = " hice todo el proyecto solito";
+
+        assertEquals("hola",vista.getFirstAtom(expression));
+        assertEquals("hice",vista.getFirstAtom(expression2));
+    }
+
+    @Test
+    public void getNAtomTest(){
+        Vista vista = new Vista();
+        String expression = "hola soy gus";
+        String expression2 = " hice todo el proyecto solito";
+
+        assertEquals("soy",vista.getNAtom(expression,1));
+        assertEquals("el",vista.getNAtom(expression2,2));
     }
 }
 
